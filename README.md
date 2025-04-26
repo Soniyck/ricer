@@ -31,8 +31,9 @@ If you want a local install (no sudo), copy `build/ricer` to a directory in your
 
 ## Usage
 ```
-ricer init <repo-path>
-ricer add-config <path-to-config>
-ricer install-pkg <package-name>
-ricer sync
+ricer init <repo-path>         # Configure the git repo for storing configs and install data
+ricer add-config <path>        # Track a config file (symlink in repo)
+ricer install-pkg <pkg-name>   # Install a package and track it
+ricer download                 # Download tracked configs and packages from the repo
+ricer upload                   # Upload local changes to the git repo
 ```
