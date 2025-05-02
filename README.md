@@ -8,70 +8,71 @@ A C++ CLI tool to synchronize your Linux rice (dotfiles & package setup) across 
 - Track installed packages
 - Sync configs and packages across devices
 
+## Dependencies
+Git is required to use `ricer`. It is used to store the configuration files and install scripts in a git repository. The tool can be used with any git hosting service (e.g., GitHub, GitLab, Bitbucket).
+
 ## Build & Install
 
-To clean build and install `ricer` globally (requires sudo):
-```sh
-./build_and_install.sh
-```
-This script will:
-- Remove any previous build directory
-- Build the project using CMake
-- Copy the `ricer` executable to `/usr/local/bin` (prompting for your sudo password)
+### Build from Source
 
-If you prefer to install manually:
 ```sh
-mkdir build && cd build
-cmake ..
-make
-sudo cp ricer /usr/local/bin/
+# Install dependencies (Debian/Ubuntu example)
+sudo apt-get install cmake g++ libyaml-cpp-dev git
+
+# Clone the repository
+git clone https://github.com/Soniyck/ricer
+cd ricer
+
+# Build
+./build.sh
 ```
 
-If you want a local install (no sudo), copy `build/ricer` to a directory in your `$PATH` (e.g., `~/bin`).
+### Install
+
+#### Option 1: Global install (requires sudo)
+```sh
+sudo ./install.sh
+```
+
+#### Option 2: Local install (no sudo)
+```sh
+./install.sh --local
+```
+
+The `install.sh` script will copy the built `ricer` binary to `/usr/local/bin` (global) or `~/bin` (local).
+
+#### Manual install (alternative)
+```sh
+sudo cp build/ricer /usr/local/bin/
+# or for local install
+cp build/ricer ~/bin/
+```
 
 ## Usage
 ```
 ricer init <repo-path>         # Configure the git repo for storing configs and install data
-ricer add-config <path>        # Track a config file (symlink in repo)
-ricer install-pkg <pkg-name>   # Install a package and track it
+ricer add-config <path>        # Track a config file
+ricer install-pkg <pkg-name>   # Install a package (using apt-get) and track it
 ricer install                  # Interactive install command entry
-ricer reinstall                # Reinstall from YAML files and auto-install packages
-ricer sync [--no-interactive]  # Sync tracked files between repo and local system
-ricer download                 # Download tracked configs and packages from the repo
+ricer reinstall                # Reinstall all tracked packages and commands
+ricer sync [--no-interactive]  # Sync tracked config files between repo and local system
+ricer download                 # Download changes from the git repo
 ricer upload                   # Upload local changes to the git repo
 ```
 
-### Sync Command
-
-- `ricer sync`: Synchronizes all tracked config files between your local system and the repository. By default, prompts before overwriting files if there are changes.
-- `ricer sync --no-interactive`: Runs sync without prompts, automatically updating files based on which is newer.
-
-This command ensures your configs are up-to-date across devices. Paths in `.syncmap` are portable and will work across different usernames/machines.
-
 ## Install and Reinstall
 
-- `ricer install`: Interactively create a YAML file of install commands in your repo's `/install` folder.
-- `ricer reinstall`: Runs all new or changed YAMLs in `/install` and installs any packages listed in `/auto-install`. Keeps track of executed files and their versions in `~/.ricer-config`.
+- `ricer install`: Lets user execute commands and decide whether to track them.
+- `ricer reinstall`: Runs all new or changed installations.
 
-### How `ricer reinstall` Works
-- Scans `/install` for YAML files. If a YAML file is new or changed (by SHA256 hash), all its commands are executed.
-- Installs all packages listed in `/auto-install` (if present).
-- After successful execution, updates `~/.ricer-config` with the latest hashes.
-
-This ensures you can easily reapply or update all tracked install steps and packages after a repo update or on a new machine.
-
-## YAML-based Install Commands
-
-To interactively create a YAML file with install commands, use:
+### Interactive Install Command
 
 ```sh
-./ricer install
+ricer install
 ```
 
 - Enter install commands one by one; each is executed immediately.
-- After each command, confirm if it should be added to the YAML.
+- After each command, confirm if it should be tracked.
 - Press ENTER on an empty line to finish entering commands.
-- You will be prompted for the install YAML filename (extension `.yaml` is added if missing).
+- You will be prompted for the installation name.
 - The YAML file is saved to your repo's `install/` directory.
-
-You can then use this YAML file with your install runner or for tracking purposes.

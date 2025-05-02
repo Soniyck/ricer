@@ -21,7 +21,6 @@
 *.app
 
 # CMake build folders
-/build/
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
@@ -48,4 +47,3 @@ Thumbs.db
 
 # Omitted folders
 .idea/
-build/
