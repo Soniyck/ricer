@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 
 namespace ricer {
     /**
@@ -43,4 +44,42 @@ namespace ricer {
      * @return true if configured, false otherwise
      */
     bool check_repo_configured(std::string& repo_path);
+
+    // --- SYNC LOGIC ---
+    /**
+     * Compute the SHA-256 hash of a file.
+     * @param filename Path to the file to hash
+     * @return The SHA-256 hash of the file as a string
+     */
+    std::string compute_sha256(const std::string& filename);
+
+    /**
+     * Read the syncmap from a file.
+     * @param syncmap_path Path to the syncmap file
+     * @return A vector of pairs containing the filename and its corresponding hash
+     */
+    std::vector<std::tuple<std::string, std::string, std::string>> read_syncmap(const std::string& syncmap_path);
+
+    /**
+     * Write the syncmap to a file.
+     * @param syncmap_path Path to the syncmap file
+     * @param mappings A vector of pairs containing the filename and its corresponding hash
+     */
+    void write_syncmap(const std::string& syncmap_path, const std::vector<std::pair<std::string, std::string>>& mappings);
+
+    /**
+     * Sync files based on the syncmap.
+     * @param interactive Whether to run interactively
+     * @return 0 on success, nonzero on error
+     */
+    int sync_files(bool interactive);
+
+    /**
+     * Interactively create an install YAML file by running and collecting shell commands from the user.
+     * @return 0 on success, nonzero on error
+     */
+    int create_install_yaml();
+
+    // Run new or changed install YAMLs from /install
+    int reinstall();
 }

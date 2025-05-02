@@ -20,6 +20,15 @@ int main(int argc, char* argv[]) {
         return ricer::download();
     } else if (cmd == "upload") {
         return ricer::upload();
+    } else if (cmd == "sync") {
+        // Usage: ricer sync [--no-interactive]
+        bool interactive = true;
+        if (argc >= 3 && std::string(argv[2]) == "--no-interactive") interactive = false;
+        return ricer::sync_files(interactive);
+    } else if (cmd == "install") {
+        return ricer::create_install_yaml();
+    } else if (cmd == "reinstall") {
+        return ricer::reinstall();
     } else {
         std::cerr << "Unknown command: " << cmd << "\n";
         return 1;
