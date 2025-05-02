@@ -92,6 +92,10 @@ int InstallManager::createInstallYaml() {
     std::cout << "\nEnter name for the install YAML file (default: install.yaml): ";
     std::getline(std::cin, filename);
     if (filename.empty()) filename = "install.yaml";
+    // Ensure filename ends with .yaml
+    if (filename.size() < 5 || filename.substr(filename.size() - 5) != ".yaml") {
+        filename += ".yaml";
+    }
     std::string dir = repoPath + "/install/";
     std::string mkdir_cmd = "mkdir -p '" + dir + "'";
     std::system(mkdir_cmd.c_str());
