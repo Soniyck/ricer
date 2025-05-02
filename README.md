@@ -54,7 +54,7 @@ ricer init <repo-path>         # Configure the git repo for storing configs and 
 ricer add-config <path>        # Track a config file
 ricer install-pkg <pkg-name>   # Install a package (using apt-get) and track it
 ricer install                  # Interactive install command entry
-ricer reinstall                # Reinstall all tracked packages and commands
+ricer reinstall                # Install all new or changed packages and commands
 ricer sync [--no-interactive]  # Sync tracked config files between repo and local system
 ricer download                 # Download changes from the git repo
 ricer upload                   # Upload local changes to the git repo
