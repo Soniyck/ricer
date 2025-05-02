@@ -9,7 +9,7 @@ A C++ CLI tool to synchronize your Linux rice (dotfiles & package setup) across 
 - Sync configs and packages across devices
 
 ## Dependencies
-Git is required to use `ricer`. It is used to store the configuration files and install scripts in a git repository. The tool can be used with any git hosting service (e.g., GitHub, GitLab, Bitbucket).
+**Git** - required to use ricer. It is used to store the configuration files and install scripts in a git repository. The tool can be used with any git hosting service (e.g., GitHub, GitLab, Bitbucket).
 
 ## Build & Install
 
