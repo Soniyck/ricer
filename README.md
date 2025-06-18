@@ -17,7 +17,7 @@ A C++ CLI tool to synchronize your Linux rice (dotfiles & package setup) across 
 
 ```sh
 # Install dependencies (Debian/Ubuntu example)
-sudo apt-get install cmake g++ libyaml-cpp-dev git
+sudo apt-get install cmake g++ libyaml-cpp-dev git libssl-dev
 
 # Clone the repository
 git clone https://github.com/Soniyck/ricer
